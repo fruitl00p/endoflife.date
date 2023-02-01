@@ -80,3 +80,4 @@ defaults:
       extendedSupportColumnLabel: 'Extended Support'
       LTSLabel: '<abbr title="Long Term Support">LTS</abbr>'
 encoding: utf-8
+logo: "/assets/favicon-32x32.png"
