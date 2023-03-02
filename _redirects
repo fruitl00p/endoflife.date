@@ -35,6 +35,3 @@ layout: null
   {%- endif %}
 
 {% endfor %}
-
-# Send a JSON response for 404 in API
-/api/*          /assets/404.json                404
