@@ -172,15 +172,13 @@ module ApiV1
           label: product.data['title'],
           category: product.data['category'],
           tags: product.data['tags'],
-          identifiers: [
-            product.data['identifiers']
-                   .map { |identifier| {
-                     type: identifier.keys.first,
-                     id: identifier.values.first
-                   }}
-          ],
+          identifiers: product.data['identifiers']
+          .map { |identifier| {
+            type: identifier.keys.first,
+            id: identifier.values.first
+          }},
           uri: "#{site.config['url']}/api/v#{ApiV1::MAJOR_VERSION}/products/#{product.data['id']}/",
-        } }
+        }}
       })
     end
   end
@@ -193,13 +191,11 @@ module ApiV1
         label: product.data['title'],
         category: product.data['category'],
         tags: product.data['tags'],
-        identifiers: [
-          product.data['identifiers']
-                 .map { |identifier| {
-                   type: identifier.keys.first,
-                   id: identifier.values.first
-                 }}
-        ],
+        identifiers: product.data['identifiers']
+        .map { |identifier| {
+          type: identifier.keys.first,
+          id: identifier.values.first
+        }},
         links: {
           icon: product.data['iconUrl'],
           html: "#{site.config['url']}/#{id}",
@@ -209,25 +205,23 @@ module ApiV1
         # https://github.com/gjtorikian/jekyll-last-modified-at/blob/master/lib/jekyll-last-modified-at/determinator.rb
         lastModified: product.data['last_modified_at'].last_modified_at_time.iso8601,
         auto: product.data.has_key?('auto'),
-        cycles: [
-          product.data['releases']
-                 .map { |cycle| {
-                   name: cycle['releaseCycle'],
-                   codename: cycle['codename'],
-                   label: ApiV1.strip_html(cycle['label']),
-                   date: cycle['releaseDate'],
-                   support: cycle['support'],
-                   lts: cycle['lts'],
-                   eol: cycle['eol'],
-                   discontinued: cycle['discontinued'],
-                   extendedSupport: cycle['extendedSupport'],
-                   latest: {
-                     name: cycle['latest'],
-                     date: cycle['latestReleaseDate'],
-                     link: cycle['link'],
-                   }
-                 } }
-        ]
+        cycles: product.data['releases']
+        .map { |cycle| {
+          name: cycle['releaseCycle'],
+          codename: cycle['codename'],
+          label: ApiV1.strip_html(cycle['label']),
+          date: cycle['releaseDate'],
+          support: cycle['support'],
+          lts: cycle['lts'],
+          eol: cycle['eol'],
+          discontinued: cycle['discontinued'],
+          extendedSupport: cycle['extendedSupport'],
+          latest: {
+            name: cycle['latest'],
+            date: cycle['latestReleaseDate'],
+            link: cycle['link'],
+          }
+        }}
       })
     end
   end
