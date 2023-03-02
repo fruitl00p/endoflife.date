@@ -172,6 +172,13 @@ module ApiV1
           label: product.data['title'],
           category: product.data['category'],
           tags: product.data['tags'],
+          identifiers: [
+            product.data['identifiers']
+                   .map { |identifier| {
+                     type: identifier.keys.first,
+                     id: identifier.values.first
+                   }}
+          ],
           uri: "#{site.config['url']}/api/v#{ApiV1::MAJOR_VERSION}/products/#{product.data['id']}/",
         } }
       })
@@ -186,6 +193,13 @@ module ApiV1
         label: product.data['title'],
         category: product.data['category'],
         tags: product.data['tags'],
+        identifiers: [
+          product.data['identifiers']
+                 .map { |identifier| {
+                   type: identifier.keys.first,
+                   id: identifier.values.first
+                 }}
+        ],
         links: {
           icon: product.data['iconUrl'],
           html: "#{site.config['url']}/#{id}",

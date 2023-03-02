@@ -197,6 +197,18 @@ components:
           description: URI
           example: {{ site.url }}
 
+    Identifier:
+      type: object
+      properties:
+        name:
+          type: type
+          description: Type of the identifier (repology, purl...)
+          example: purl
+        id:
+          type: string
+          description: Identifier
+          example: pkg:docker/gerritcodereview/gerrit
+
     UriList:
       type: object
       properties:
@@ -229,6 +241,11 @@ components:
           description: Tags associated to the product
           items:
             type: string
+        identifiers:
+          type: array
+          description: Identifiers (purl, repology...) associated to the product
+          items:
+            $ref: '#/components/schemas/Identifier'
         uri:
           type: string
           format: uri
@@ -362,6 +379,11 @@ components:
           description: Tags associated to the productv
           items:
             type: string
+        identifiers:
+          type: array
+          description: Identifiers (purl, repology...) associated to the product
+          items:
+            $ref: '#/components/schemas/Identifier'
         links:
           type: array
           description: API links (such as the Icon URL, the releasePolicyLink...).
