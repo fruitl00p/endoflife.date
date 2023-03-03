@@ -43,7 +43,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UriList'
+                $ref: '#/components/schemas/UriListResponse'
 
   /products:
     get:
@@ -57,7 +57,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductList'
+                $ref: '#/components/schemas/ProductListResponse'
 
   /products/{product}/:
     get:
@@ -79,7 +79,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductResponse'
 
   /products/{product}/cycles/{cycle}:
     get:
@@ -104,7 +104,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCycle'
+                $ref: '#/components/schemas/ProductCycleResponse'
 
   /products/{product}/cycles/latest/:
     get:
@@ -123,7 +123,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductCycle'
+                $ref: '#/components/schemas/ProductCycleResponse'
 
   /categories:
     get:
@@ -135,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UriList'
+                $ref: '#/components/schemas/UriListResponse'
 
   /categories/{category}:
     get:
@@ -156,7 +156,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductList'
+                $ref: '#/components/schemas/ProductListResponse'
 
   /tags:
     get:
@@ -168,7 +168,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UriList'
+                $ref: '#/components/schemas/UriListResponse'
 
   /tags/{tag}:
     get:
@@ -189,8 +189,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductList'
+                $ref: '#/components/schemas/ProductListResponse'
 
+# Responses must be at the end of the list, contain a schema_version property and be suffixed with
+# 'Response' to facilitate maintenance and reading.
 components:
   schemas:
     Uri:
@@ -199,12 +201,12 @@ components:
         name:
           type: string
           description: Name of the URI
-          example: endoflife
+          example: tags
         uri:
           type: string
           format: uri
           description: URI
-          example: {{ site.url }}
+          example: {{ site.url }}/tags/
 
     Identifier:
       type: object
@@ -217,66 +219,6 @@ components:
           type: string
           description: Identifier
           example: cpe:/o:almalinux:almalinux
-
-    UriList:
-      type: object
-      properties:
-        schema_version:
-          type: string
-          description: Version of this schema.
-          example: 1.0.0
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/Uri'
-
-    ProductListItem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the product
-          example: debian
-        label:
-          type: string
-          description: Label of the product
-          example: Debian GNU/Linux
-        category:
-          type: string
-          description: Category of the product
-          example: os
-        tags:
-          type: array
-          description: Tags associated to the product
-          items:
-            type: string
-        identifiers:
-          type: array
-          description: Known identifiers (purl, repology, cpe...) associated to the product
-          items:
-            $ref: '#/components/schemas/Identifier'
-        uri:
-          type: string
-          format: uri
-          description: API URI
-          example: {{ site.url }}/api/v1/products/debian/
-
-    ProductList:
-      type: object
-      properties:
-        schema_version:
-          type: string
-          description: Version of this schema.
-          example: 1.0.0
-        total:
-          type: integer
-          format: int32
-          description: Number of products in the list.
-          example: 1
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductListItem'
 
     ProductVersion:
       type: object
@@ -299,10 +241,6 @@ components:
     ProductCycle:
       type: object
       properties:
-        schema_version:
-          type: string
-          description: Version of this schema.
-          example: 1.0.0
         name:
           type: string
           description: Name of the product cycle.
@@ -364,28 +302,24 @@ components:
           type: object
           $ref: '#/components/schemas/ProductVersion'
 
-    Product:
+    ProductSummary:
       type: object
       properties:
-        schema_version:
-          type: string
-          description: Version of this schema.
-          example: 1.0.0
         name:
           type: string
-          description: Name of the product.
+          description: Name of the product
           example: debian
         label:
           type: string
-          description: Label of the product.
+          description: Label of the product
           example: Debian GNU/Linux
         category:
           type: string
-          description: Category of the product.
+          description: Category of the product
           example: os
         tags:
           type: array
-          description: Tags associated to the productv
+          description: Tags associated to the product
           items:
             type: string
         identifiers:
@@ -393,6 +327,38 @@ components:
           description: Known identifiers (purl, repology, cpe...) associated to the product
           items:
             $ref: '#/components/schemas/Identifier'
+        uri:
+          type: string
+          format: uri
+          description: Link to the full product details
+          example: {{ site.url }}/api/v1/products/debian/
+
+    ProductDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the product
+          example: debian
+        label:
+          type: string
+          description: Label of the product
+          example: Debian GNU/Linux
+        category:
+          type: string
+          description: Category of the product
+          example: os
+        tags:
+          type: array
+          description: Tags associated to the product
+          items:
+            type: string
+        identifiers:
+          type: array
+          description: Known identifiers (purl, repology, cpe...) associated to the product
+          items:
+            $ref: '#/components/schemas/Identifier'
+        # Additional properties (compared to ProductSummary)
         links:
           type: array
           description: API links (such as the Icon URL, the releasePolicyLink...).
@@ -402,12 +368,66 @@ components:
           type: string
           description: Command that can be used to check the current product version.
           example: cat /etc/os-release
-        auto:
-          type: boolean
-          description: Whether or not product versions are automatically updated.
-          example: true
         cycles:
           type: array
           description: Product release cycles.
           items:
             $ref: '#/components/schemas/ProductCycle'
+
+    UriListResponse:
+      type: object
+      properties:
+        schema_version:
+          type: string
+          description: Version of this schema.
+          example: 1.0.0
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Uri'
+
+    ProductListResponse:
+      type: object
+      properties:
+        schema_version:
+          type: string
+          description: Version of this schema.
+          example: 1.0.0
+        total:
+          type: integer
+          format: int32
+          description: Number of products in the list.
+          example: 1
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSummary'
+
+    ProductCycleResponse:
+      type: object
+      properties:
+        schema_version:
+          type: string
+          description: Version of this schema.
+          example: 1.0.0
+        result:
+          $ref: '#/components/schemas/ProductCycle'
+
+    ProductResponse:
+      type: object
+      properties:
+        schema_version:
+          type: string
+          description: Version of this schema.
+          example: 1.0.0
+        last_modified:
+          type: string
+          format: date-time
+          description: The time this product was last modified.
+          example: 2023-03-01T14:05:52+01:00
+        auto:
+          type: boolean
+          description: Whether or not product versions are automatically updated.
+          example: true
+        result:
+          $ref: '#/components/schemas/ProductDetails'
