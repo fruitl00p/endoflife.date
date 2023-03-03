@@ -201,7 +201,7 @@ module ApiV1
         links: {
           icon: product.data['iconUrl'],
           html: "#{site.config['url']}/#{id}",
-          releasePolicyLink: product.data['releasePolicyLink'],
+          releasePolicy: product.data['releasePolicyLink'],
         },
         versionCommand: product.data['versionCommand'],
         cycles: product.data['releases']
