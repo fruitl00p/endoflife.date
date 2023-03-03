@@ -35,7 +35,7 @@ servers:
 paths:
   /:
     get:
-      summary: Get a list of the endoflife.date API endpoints
+      summary: List the main endoflife.date API endpoints.
       responses:
         '200':
           description: successful operation
@@ -47,7 +47,9 @@ paths:
 
   /products:
     get:
-      summary: Get a list of the products referenced by endoflife.date
+      summary: >
+        List all the products referenced on endoflife.date.
+        Only a subset of each product's data is returned by this endpoint.
       responses:
         '200':
           description: successful operation
@@ -59,7 +61,10 @@ paths:
 
   /products/{product}/:
     get:
-      summary: Get a product detailed information
+      summary: >
+        Get the given product data.
+        This endpoint is returning all endoflife.date knows about the product, including release
+        cycles data.
       parameters:
         - name: product
           in: path
@@ -78,7 +83,7 @@ paths:
 
   /products/{product}/cycles/{cycle}:
     get:
-      summary: Get a product cycle detailed information
+      summary: Get the given product release cycle data.
       parameters:
         - name: product
           in: path
@@ -103,7 +108,7 @@ paths:
 
   /products/{product}/cycles/latest/:
     get:
-      summary: Get the latest product cycle detailed information
+      summary: Get the latest release cycle data for the given product.
       parameters:
         - name: product
           in: path
@@ -122,7 +127,7 @@ paths:
 
   /categories:
     get:
-      summary: Get the list of all the categories
+      summary: List all endoflife.date categories.
       responses:
         '200':
           description: successful operation
@@ -134,7 +139,9 @@ paths:
 
   /categories/{category}:
     get:
-      summary: Get the list of all the products in the given category
+      summary: >
+        List all the products referenced on endoflife.date for the given category.
+        Only a subset of each product's data is returned by this endpoint.
       parameters:
         - name: category
           in: path
@@ -153,7 +160,7 @@ paths:
 
   /tags:
     get:
-      summary: Get the list of all the tags
+      summary: List all endoflife.date tags.
       responses:
         '200':
           description: successful operation
@@ -165,7 +172,9 @@ paths:
 
   /tags/{tag}:
     get:
-      summary: Get the list of all the products having the given tag
+      summary: >
+        List all the products referenced on endoflife.date for the given tag.
+        Only a subset of each product's data is returned by this endpoint.
       parameters:
         - name: tag
           in: path
@@ -202,12 +211,12 @@ components:
       properties:
         name:
           type: type
-          description: Type of the identifier (repology, purl...)
+          description: Type of the identifier (types as of 2023-03 are repology, purl and cpe)
           example: purl
         id:
           type: string
           description: Identifier
-          example: pkg:docker/gerritcodereview/gerrit
+          example: cpe:/o:almalinux:almalinux
 
     UriList:
       type: object
@@ -243,7 +252,7 @@ components:
             type: string
         identifiers:
           type: array
-          description: Identifiers (purl, repology...) associated to the product
+          description: Known identifiers (purl, repology, cpe...) associated to the product
           items:
             $ref: '#/components/schemas/Identifier'
         uri:
@@ -381,7 +390,7 @@ components:
             type: string
         identifiers:
           type: array
-          description: Identifiers (purl, repology...) associated to the product
+          description: Known identifiers (purl, repology, cpe...) associated to the product
           items:
             $ref: '#/components/schemas/Identifier'
         links:
