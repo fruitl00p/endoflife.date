@@ -1,12 +1,4 @@
-## API v0 alpha
-
-On 2023-03-02 endpoints were:
-
-- "All products" (`/api/all.json`) : Return a list of all products.
-- "Product" (`/api/{product}.json`) : Get EoL dates of all cycles of a given product.
-- "Cycle" (`/api/{product}/{cycle}.json`) : Details of a single release cycle of a given product.
-
-## API v1.0.0-b1
+## API v1.0.0
 
 ### Summary
 
@@ -52,3 +44,13 @@ rule and [takes precedence](https://docs.netlify.com/routing/redirects/#rule-pro
 - `/api/v1/categories/<category>` - list products having the given category
 - `/api/v1/tags/` - list tags used on endoflife.date
 - `/api/v1/tags/<tag>` - list products having the given tag
+
+
+
+## API v0
+
+On 2023-03-02 endpoints were:
+
+- "All products" (`/api/all.json`) : Return a list of all products.
+- "Product" (`/api/{product}.json`) : Get EoL dates of all cycles of a given product.
+- "Cycle" (`/api/{product}/{cycle}.json`) : Details of a single release cycle of a given product.
