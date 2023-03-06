@@ -2,12 +2,12 @@
 
 ### Summary
 
-API v1 is a major rework of the API v0 with a lot of breaking changes. Compared the API v0, API v1:
+API v1 is a major rework of the API v0 with a lot of breaking changes. Compared to the API v0, API v1:
 
-- is generated using a Jekyll Generator (see https://jekyllrb.com/docs/plugins/generators/),
+- feels more "Restful",
 - is versioned using the `api/v1` prefix, making it easier to implement non-backward-compatible
   changes,
-- feels more "Restful".
+- is generated using a Jekyll Generator (see https://jekyllrb.com/docs/plugins/generators/).
 
 API v1 resolves : #394, #759, #905, #2062, #2066, #2078, #2160, #2331, #2431, #2595. It also reverts
 #2425 due to incompatibilities in redirect rules.
@@ -35,7 +35,7 @@ The API v0 is still generated to give time to users to migrate to API v1.
 ### Changes in 404 error responses
 
 404 error JSON responses are not returned anymore. #2425 has been reverted because it conflicted
-with the rule that rewrite the paths to add `/index.json` to all requests, which is also a global
+with the rule that rewrites the paths to add `/index.json` to all requests, which is also a global
 rule and [takes precedence](https://docs.netlify.com/routing/redirects/#rule-processing-order).
 
 ### New endpoints
@@ -49,8 +49,8 @@ rule and [takes precedence](https://docs.netlify.com/routing/redirects/#rule-pro
 
 ## API v0
 
-On 2023-03-02 endpoints were:
+On 2023-03-02 the v0 endpoints were:
 
 - "All products" (`/api/all.json`) : Return a list of all products.
-- "Product" (`/api/{product}.json`) : Get EoL dates of all cycles of a given product.
+- "Product" (`/api/{product}.json`) : Get EoL dates of all cycles for a given product.
 - "Cycle" (`/api/{product}/{cycle}.json`) : Details of a single release cycle of a given product.

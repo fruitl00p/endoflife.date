@@ -45,6 +45,8 @@ endoflife.date is relying on various amazing software and components :
 - [Just the Docs](https://github.com/just-the-docs/just-the-docs), a documentation theme for Jekyll.
 - [Stoplight Elements](https://stoplight.io/open-source/elements), a collection of UI components for
   displaying beautiful developer documentation from any OpenAPI document.
+- [Swagger UI](https://swagger.io/tools/swagger-ui/), a documentation generator for OpenAPI
+  Specification.
 - [Simple Icons](https://simpleicons.org/), free SVG icons for popular brands.
 - Our icon is derived from [Hourglass icon (orange)](https://commons.wikimedia.org/wiki/File:Hourglass_icon_%28orange%29.svg)
   by David Abián and Serhio Magpie on the English Wikipedia. Remixed under the CC-BY-SA-4.0 license.
